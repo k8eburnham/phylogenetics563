@@ -39,7 +39,7 @@
 ### based on these results, I should use the clustalW-generated aligned fasta files going forward
 ### other existing mechanisms to compare alignment quality: gap consolidation, average identity in the "Information Content" or "Logo" section, handling of ends
 
-## Note to self: these files still need to be combined into one master file for each locus before I build my phylogenetic tree (concatenation)
+## Note to self: these files still need to be combined into one master file for each locus before I build my phylogenetic tree (concatenation) - is this just for distance/parsimony methods, or ML too?
 
 
 # 2026-03-03: Generating distance- and parsimony-based trees using R (using clustalw-aligned fasta files; see rationale above)
@@ -108,3 +108,58 @@
 ### dev.off()
 
 ### note to self: both of these trees are the same, yay!
+
+# 2026-03-19: Maximum likelihod ___ using RAxML on my data
+
+## algorithm description, pros and cons
+
+### Starting tree: maximum parsimony tree; defaults to using 20 starting trees
+### Fast to compute, good enough, maybe not the most accurate so we’ll tweak it
+
+### Model of evolution: chosen based on the data? Or not, sounds like it uses GTR, which is one of the more complex models
+### CRL: Done internally, just like IQ-tree
+### All ML methods have those 3 assumptions - all branches, sites evolve the same
+
+### Data quality: assumes input sequences are aligned, homologous, no duplicate sequences (orthology step?), can flag gappy regions, ID sequences and/or unexpected characters
+
+### Convergence (end point): searches tree space using lazy subtree rearrangement; stops when likelihood score stops increasing statistically significantly; unclear on methods to ensure reliable results
+
+## reproducible script
+
+### 1. Install RAxML using this link (https://github.com/amkozlov/raxml-ng) and move it to the bin so it can be executed from any folder
+
+cd Downloads
+ls # check the raxml-ng executable is there
+sudo cp raxml-ng /usr/local/bin # I needed to override my mac's permissions with sudo to do this
+
+### 2. Check the alignment of my data (using clustalw-aligned fasta files for the rest of this exercise; see rationale above)
+
+raxml-ng --check --msa concatenated_uce.fasta --model partitions.txt # using partitions.txt as the --model bc it combines the 3 loci & GTR+G is specified within it #could use some justification for the GTR+G model over LG+G8+F
+
+### 3. Run RAxML
+
+raxml-ng --msa concatenated_uce.fasta --model partitions.txt --prefix my_uce_tree --threads 4 #using 4 because I checked how many cores my computer has
+
+### 4. Ensure the correct files were saved in RAxML folder: my_uce_tree.raxml.bestTree, my_uce_tree.raxml.mlTrees, my_uce_tree.raxml.bestModel, my_uce_tree.raxml.log
+
+### 5. Plot in R just to see, not saving
+
+library(ape)
+tre = read.tree(file="my_uce_tree.raxml.bestTree")
+plot(tre)
+
+### 6. re-run RAxML with non-parametric bootstrapping using the flag --all
+
+raxml-ng --all --msa concatenated_uce.fasta --model partitions.txt --bs-trees 10 --prefix uce_ml_bootstrap --threads 4 
+## note to self: for final, increase bootstrapping number to 100 or use --bs-trees autoMRE to let the program decide
+
+### 7. plot the tree in R and root it (very important!!) - not saving to figures now, but should for final project
+
+library(ape)
+tre = read.tree(file="primatesAA-aligned-muscle-raxml-boostrap.raxml.support")
+plot(tre)
+nodelabels()
+
+rtre = root(tre, outgroup = "Acropyga_sp_FMNHINS0003471605", resolve.root = TRUE) # choosing a species because using a node number was throwing an error - would appreciate help on confirming if this is the right species to use as outgroup for rooting purposes
+plot(rtre)
+nodelabels(rtre$node.label)

@@ -1,0 +1,122 @@
+
+RAxML-NG v. 1.2.2 released on 30.04.2024 by The Exelixis Lab.
+Developed by: Alexey M. Kozlov and Alexandros Stamatakis.
+Contributors: Diego Darriba, Tomas Flouri, Benoit Morel, Sarah Lutteropp, Ben Bettisworth, Julia Haag, Anastasis Togkousidis.
+Latest version: https://github.com/amkozlov/raxml-ng
+Questions/problems/suggestions? Please visit: https://groups.google.com/forum/#!forum/raxml
+
+System: Apple M1, 8 cores, 8 GB RAM
+
+RAxML-NG was called at 19-Mar-2026 12:31:17 as follows:
+
+raxml-ng --all --msa concatenated_uce.fasta --model partitions.txt --bs-trees 10 --prefix uce_ml_bootstrap --threads 4
+
+Analysis options:
+  run mode: ML tree search + bootstrapping (Felsenstein Bootstrap)
+  start tree(s): random (10) + parsimony (10)
+  bootstrap replicates: parsimony (10)
+  random seed: 1773941477
+  tip-inner: OFF
+  pattern compression: ON
+  per-rate scalers: OFF
+  site repeats: ON
+  logLH epsilon: general: 10.000000, brlen-triplet: 1000.000000
+  fast spr radius: AUTO
+  spr subtree cutoff: 1.000000
+  fast CLV updates: ON
+  branch lengths: proportional (ML estimate, algorithm: NR-FAST)
+  SIMD kernels: SSE3
+  parallelization: coarse-grained (auto), PTHREADS (4 threads), thread pinning: OFF
+
+[00:00:00] Reading alignment from file: concatenated_uce.fasta
+[00:00:00] Loaded alignment with 10 taxa and 8009 sites
+
+Alignment comprises 3 partitions and 3322 patterns
+
+Partition 0: filtered_uce-149
+Model: GTR+FO+G4m+B
+Alignment sites / patterns: 2347 / 1532
+Gaps: 34.50 %
+Invariant sites: 22.33 %
+
+Partition 1: filtered_uce-741
+Model: GTR+FO+G4m+B
+Alignment sites / patterns: 2876 / 1105
+Gaps: 45.34 %
+Invariant sites: 58.73 %
+
+Partition 2: filtered_uce-910
+Model: GTR+FO+G4m+B
+Alignment sites / patterns: 2786 / 685
+Gaps: 47.32 %
+Invariant sites: 66.58 %
+
+
+NOTE: Binary MSA file created: uce_ml_bootstrap.raxml.rba
+
+Parallelization scheme autoconfig: 1 worker(s) x 4 thread(s)
+
+[00:00:00] Generating 10 random starting tree(s) with 10 taxa
+[00:00:00] Generating 10 parsimony starting tree(s) with 10 taxa
+Parallel parsimony with 4 threads
+Parallel reduction/worker buffer size: 1 KB  / 0 KB
+
+[00:00:00] Data distribution: max. partitions/sites/weight per thread: 2 / 831 / 13296
+[00:00:00] Data distribution: max. searches per worker: 30
+
+Starting ML tree search with 20 distinct starting trees
+
+[00:00:00] ML tree search #1, logLikelihood: -36654.013839
+[00:00:01] ML tree search #2, logLikelihood: -36654.014290
+[00:00:01] ML tree search #3, logLikelihood: -36654.015056
+[00:00:02] ML tree search #4, logLikelihood: -36654.026413
+[00:00:02] ML tree search #5, logLikelihood: -36654.016610
+[00:00:03] ML tree search #6, logLikelihood: -36654.012365
+[00:00:04] ML tree search #7, logLikelihood: -36654.014236
+[00:00:05] ML tree search #8, logLikelihood: -36654.010660
+[00:00:05] ML tree search #9, logLikelihood: -36653.848940
+[00:00:06] ML tree search #10, logLikelihood: -36653.834104
+[00:00:06] ML tree search #11, logLikelihood: -36653.819171
+[00:00:07] ML tree search #12, logLikelihood: -36653.818652
+[00:00:07] ML tree search #13, logLikelihood: -36653.818492
+[00:00:08] ML tree search #14, logLikelihood: -36653.823875
+[00:00:08] ML tree search #15, logLikelihood: -36653.818566
+[00:00:08] ML tree search #16, logLikelihood: -36653.818768
+[00:00:09] ML tree search #17, logLikelihood: -36653.819113
+[00:00:09] ML tree search #18, logLikelihood: -36653.830762
+[00:00:10] ML tree search #19, logLikelihood: -36653.818503
+[00:00:11] ML tree search #20, logLikelihood: -36653.818832
+
+[00:00:11] ML tree search completed, best tree logLH: -36653.818492
+
+[00:00:11] Starting bootstrapping analysis with 10 replicates.
+
+[00:00:11] Bootstrap tree #1, logLikelihood: -36594.619425
+[00:00:11] Bootstrap tree #2, logLikelihood: -36830.489687
+[00:00:12] Bootstrap tree #3, logLikelihood: -36989.081144
+[00:00:12] Bootstrap tree #4, logLikelihood: -36804.093200
+[00:00:12] Bootstrap tree #5, logLikelihood: -36787.554067
+[00:00:13] Bootstrap tree #6, logLikelihood: -36580.299428
+[00:00:13] Bootstrap tree #7, logLikelihood: -36919.245001
+[00:00:13] Bootstrap tree #8, logLikelihood: -36286.594116
+[00:00:14] Bootstrap tree #9, logLikelihood: -37315.643309
+[00:00:14] Bootstrap tree #10, logLikelihood: -36454.821592
+
+
+Final LogLikelihood: -36653.818492
+
+AIC score: 73399.636983 / AICc score: 73400.180063 / BIC score: 73721.099758
+Free parameters (model + branch lengths): 46
+
+Best ML tree saved to: /Users/katieburnham/phylogenetics563/data/RAxML/uce_ml_bootstrap.raxml.bestTree
+All ML trees saved to: /Users/katieburnham/phylogenetics563/data/RAxML/uce_ml_bootstrap.raxml.mlTrees
+Best ML tree with Felsenstein bootstrap (FBP) support values saved to: /Users/katieburnham/phylogenetics563/data/RAxML/uce_ml_bootstrap.raxml.support
+Optimized model saved to: /Users/katieburnham/phylogenetics563/data/RAxML/uce_ml_bootstrap.raxml.bestModel
+Bootstrap trees saved to: /Users/katieburnham/phylogenetics563/data/RAxML/uce_ml_bootstrap.raxml.bootstraps
+
+Execution log saved to: /Users/katieburnham/phylogenetics563/data/RAxML/uce_ml_bootstrap.raxml.log
+
+Analysis started: 19-Mar-2026 12:31:17 / finished: 19-Mar-2026 12:31:31
+
+Elapsed time: 14.492 seconds
+

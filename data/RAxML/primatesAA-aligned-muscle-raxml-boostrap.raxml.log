@@ -1,0 +1,33 @@
+
+RAxML-NG v. 1.2.2 released on 30.04.2024 by The Exelixis Lab.
+Developed by: Alexey M. Kozlov and Alexandros Stamatakis.
+Contributors: Diego Darriba, Tomas Flouri, Benoit Morel, Sarah Lutteropp, Ben Bettisworth, Julia Haag, Anastasis Togkousidis.
+Latest version: https://github.com/amkozlov/raxml-ng
+Questions/problems/suggestions? Please visit: https://groups.google.com/forum/#!forum/raxml
+
+System: Apple M1, 8 cores, 8 GB RAM
+
+RAxML-NG was called at 19-Mar-2026 12:30:07 as follows:
+
+raxml-ng --all --msa primatesAA-aligned-muscle.fasta --model LG+G8+F --bs-trees 10 --prefix primatesAA-aligned-muscle-raxml-boostrap
+
+Analysis options:
+  run mode: ML tree search + bootstrapping (Felsenstein Bootstrap)
+  start tree(s): random (10) + parsimony (10)
+  bootstrap replicates: parsimony (10)
+  random seed: 1773941407
+  tip-inner: OFF
+  pattern compression: ON
+  per-rate scalers: OFF
+  site repeats: ON
+  logLH epsilon: general: 10.000000, brlen-triplet: 1000.000000
+  fast spr radius: AUTO
+  spr subtree cutoff: 1.000000
+  fast CLV updates: ON
+  branch lengths: proportional (ML estimate, algorithm: NR-FAST)
+  SIMD kernels: SSE3
+  parallelization: coarse-grained (auto), PTHREADS (auto)
+
+
+ERROR: Alignment file not found: primatesAA-aligned-muscle.fasta
+

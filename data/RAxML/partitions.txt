@@ -1,0 +1,3 @@
+GTR+G, filtered_uce-149 = 1-2347
+GTR+G, filtered_uce-741 = 2348-5223
+GTR+G, filtered_uce-910 = 5224-8009

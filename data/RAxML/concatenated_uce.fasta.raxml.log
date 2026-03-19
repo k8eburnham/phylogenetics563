@@ -1,0 +1,54 @@
+
+RAxML-NG v. 1.2.2 released on 30.04.2024 by The Exelixis Lab.
+Developed by: Alexey M. Kozlov and Alexandros Stamatakis.
+Contributors: Diego Darriba, Tomas Flouri, Benoit Morel, Sarah Lutteropp, Ben Bettisworth, Julia Haag, Anastasis Togkousidis.
+Latest version: https://github.com/amkozlov/raxml-ng
+Questions/problems/suggestions? Please visit: https://groups.google.com/forum/#!forum/raxml
+
+System: Apple M1, 8 cores, 8 GB RAM
+
+RAxML-NG was called at 19-Mar-2026 12:22:06 as follows:
+
+raxml-ng --check --msa concatenated_uce.fasta --model partitions.txt
+
+Analysis options:
+  run mode: Alignment validation
+  start tree(s): 
+  random seed: 1773940926
+  SIMD kernels: SSE3
+  parallelization: coarse-grained (auto), PTHREADS (auto)
+
+[00:00:00] Reading alignment from file: concatenated_uce.fasta
+[00:00:00] Loaded alignment with 10 taxa and 8009 sites
+
+Alignment comprises 3 partitions and 8009 sites
+
+Partition 0: filtered_uce-149
+Model: GTR+FO+G4m+B
+Alignment sites: 2347
+Gaps: 34.50 %
+Invariant sites: 22.33 %
+
+Partition 1: filtered_uce-741
+Model: GTR+FO+G4m+B
+Alignment sites: 2876
+Gaps: 45.34 %
+Invariant sites: 58.73 %
+
+Partition 2: filtered_uce-910
+Model: GTR+FO+G4m+B
+Alignment sites: 2786
+Gaps: 47.32 %
+Invariant sites: 66.58 %
+
+
+
+Alignment can be successfully read by RAxML-NG.
+
+
+Execution log saved to: /Users/katieburnham/phylogenetics563/data/RAxML/concatenated_uce.fasta.raxml.log
+
+Analysis started: 19-Mar-2026 12:22:06 / finished: 19-Mar-2026 12:22:06
+
+Elapsed time: 0.008 seconds
+
