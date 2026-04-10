@@ -1,0 +1,11 @@
+begin mrbayes;
+ set autoclose=yes; 
+ prset brlenspr=unconstrained:exp(10.0); 
+ prset shapepr=exp(1.0); 
+ prset tratiopr=beta(1.0,1.0); 
+ prset statefreqpr = fixed(empirical); 
+ lset nst=6 rates=gamma ngammacat=4; 
+ outgroup Anochetus_mayri_FMNHINS0003165063; 
+ mcmc;
+ sumt;
+end;

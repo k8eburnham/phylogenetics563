@@ -111,7 +111,7 @@
 
 # 2026-03-19: Maximum likelihod ___ using RAxML on my data
 
-## algorithm description, pros and cons
+## algorithm description, pros and cons -- **improve this description for final 
 
 ### Starting tree: maximum parsimony tree; defaults to using 20 starting trees
 ### Fast to compute, good enough, maybe not the most accurate so we’ll tweak it
@@ -163,3 +163,45 @@ nodelabels()
 rtre = root(tre, outgroup = "Acropyga_sp_FMNHINS0003471605", resolve.root = TRUE) # choosing a species because using a node number was throwing an error - would appreciate help on confirming if this is the right species to use as outgroup for rooting purposes
 plot(rtre)
 nodelabels(rtre$node.label)
+
+
+# 2026-04-09: MrBayes
+
+## algorithm description, pros and cons -- fill this in
+
+### How it works: MrBayes uses markov chain monte carlo to sample the space of possible evolutionary trees and builds a posterior probability distribution of how likely it is that specific clades are related, then reports a tree based on that posterior probability. This is different than maximum likelihood methods, which try to find the single best tree given the data.
+### Assumptions: MrBayes assumes that the user-inputted model of evolution is correct, that rates of evolution remain constant over the tree and time, and that changes at one DNA site don't affect changes at another site.
+### Limitations: MrBayes is computationally expensive, so it takes much longer to run than maximum likelihood methods, even on my relatively small dataset. The software originally estimated that it would take 23 hours to run, but it ended up taking less than an hour for me - maybe because I used multiple cores. MRBayes also requires the user to monitor ASDSF and ESS statistics to know when to stop the run, instead of having an internal on/off switch. The software can also be sensitive to priors, especially if the dataset is small.
+### use guide I'm using: https://evomics.org/learning/phylogenetics/mrbayes/ (I couldn't access the one linked in the homework guideliens)
+
+## reproducible script
+
+### 1. convert concatenated, aligned .fasta file to .nex file; nexus format is input standard for MrBayes (run from phylogenetics563 folder)
+
+pip install biopython
+python -c "from Bio import SeqIO; SeqIO.convert('data/RAxML/concatenated_uce.fasta', 'fasta', 'data/MrBayes/concatenated_uce.nex', 'nexus', molecule_type='DNA')"
+
+### 2. create MrBayes block text file with appropriate parameters
+
+begin mrbayes;
+ set autoclose=yes; 
+ prset brlenspr=unconstrained:exp(10.0); #I expect my branch lengths to be a mix of short and long, since I have some closely and some more distantly related species, so the MrBayes default is appropriate
+ prset shapepr=exp(1.0); #exponential prior for gamma shape
+ prset tratiopr=beta(1.0,1.0); #uniform Beta prior for Ti/Tv ratio
+ prset statefreqpr = fixed(empirical); #my data has a high AT skew, so I want my model to fix the state frequencies to those calculated directly from my alignment
+ lset nst=6 rates=gamma ngammacat=4; #my data is 22k base pairs, so it warrants using the GTR model, allowing for 6 different rates of substitutions (transitions, transversions, etc)
+ mcmcp ngen=1000000 samplefreq=10 printfreq=100 nruns=2 nchains=4 savebrlens=yes; #using 1 million generations to mirror industry standard, using 2 runs to allow analysis of if the software arrived at the same tree twice, using 4 chains to allow for metropolis coupling, where one chain stays cold
+ outgroup Anochetus_mayri_FMNHINS0003165063; #belongs to a different subfamily than the rest of my species
+ mcmc;
+ sumt;
+end;
+
+### 3. append MrBayes block to the end of nexus file - I did this manually by copy-pasting the mb block to the end of the nexus file because the cat function wasn't working for me
+
+### 4. Run MrBayes - using all 8 of my computer's cores to speed it up
+
+mpirun -np 8 mb concatenated_uce_with_mbb.nex
+
+### 5. Assess if the chain has converged using Tracer and the .p files
+
+### my tracer plot has a hairy caterpiller look, an ESS of 1100/1600 (good threshold is 200), and good visual mixing of the two runs. It doesn't really show a signficant burn in period, but instead it levels off very quickly. The marginal density plots look similar, but not identical.
