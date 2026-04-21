@@ -167,7 +167,7 @@ nodelabels(rtre$node.label)
 
 # 2026-04-09: MrBayes
 
-## algorithm description, pros and cons -- fill this in
+## algorithm description, pros and cons
 
 ### How it works: MrBayes uses markov chain monte carlo to sample the space of possible evolutionary trees and builds a posterior probability distribution of how likely it is that specific clades are related, then reports a tree based on that posterior probability. This is different than maximum likelihood methods, which try to find the single best tree given the data.
 ### Assumptions: MrBayes assumes that the user-inputted model of evolution is correct, that rates of evolution remain constant over the tree and time, and that changes at one DNA site don't affect changes at another site.
@@ -205,3 +205,40 @@ mpirun -np 8 mb concatenated_uce_with_mbb.nex
 ### 5. Assess if the chain has converged using Tracer and the .p files
 
 ### my tracer plot has a hairy caterpiller look, an ESS of 1100/1600 (good threshold is 200), and good visual mixing of the two runs. It doesn't really show a signficant burn in period, but instead it levels off very quickly. The marginal density plots look similar, but not identical.
+
+# 2026-04-21: Astral (coalescent)
+
+## algorithm description, pros and cons
+
+### How it works: Astral treats gene trees as raw data (instead of nucelotide sequence information) to find a species tree from the tree space that best explains the gene trees
+### Assumptions: It assumes the gene trees you input are accurate. Any species trees generated from inaccurate gene trees are not guaranteed to be correct. It also assumes there isn't any horizontal gene flow between species, and that the primary species signal onflict comes from incomplete lineage sorting
+### Limitations: Excessive incomplete lineage sorting, if present in the data, can cause astral to inaccurately predict species relationships. Also, if genes aren't evolving independently, the results can be biased. Finally, astral is very sensitive to errors in the accuracy of the gene trees it receives, since these are its raw data.
+### instructions I'm following to install and run: https://github.com/smirarab/ASTRAL/blob/master/astral-tutorial.md 
+
+## reproducible script
+
+### 1. software install instructions
+
+#### add steps from instructions linked above?
+
+### 2. locate and prepare input files (gene trees) and decide where to store output files (species trees)
+
+#### run these from the data folder; these commands generate 3 gene trees for use in Astral using RAxML on the .fasta files created by clustalw alignment (necessary because my previous RAxML and MrBayes work was on concatenated files, which doesn't work with Astral)
+#### using standard substitution model GTRGAMMA and random seed 12345 for now
+
+raxml-ng --msa aligned_files/filtered_uce-149.aligned_clustalw.fasta --model GTR+G --prefix astral/project_data/locus149 --seed 12345 --threads 2
+raxml-ng --msa aligned_files/filtered_uce-741.aligned_clustalw.fasta --model GTR+G --prefix astral/project_data/locus741 --seed 12345 --threads 2
+raxml-ng --msa aligned_files/filtered_uce-910.aligned_clustalw.fasta --model GTR+G --prefix astral/project_data/locus910 --seed 12345 --threads 2
+
+#### combine the raxml output files (individual gene trees?) into a combined gene tree for use in astral (also run from my data folder in terminal)
+
+cat astral/project_data/*.raxml.bestTree > astral/project_data/combined_gene_trees.tre
+
+#### run Astral on the combined gene trees - from the data/Astral folder!
+
+java -jar astral.5.7.8.jar -i project_data/combined_gene_trees.tre -o project_data/astral_output_species_tree.tre
+
+### 3. Analyze the results
+
+#### My final normalized quartet score (printed out in terminal by running astral) was 0.8920634920634921, which suggests some minor incomplete lineage sorting, but it's a typical amount for empirical datasets and indicates that the primary species signal is very clear
+#### optional: visualize the output tree (data/Astral/project_data/astral_output_species_tree.tre) using R
