@@ -1,5 +1,5 @@
 #NEXUS
-[ID: 9545017179]
+[ID: 3413944560]
 [This file contains the trees that were found during the MCMC
 search, sorted by posterior probability. "p" indicates the
 posterior probability of the tree whereas "P" indicates the
@@ -17,7 +17,6 @@ begin trees;
     8 Ooceraea_australis_CASENT0106146,
     9 Pheidole_flavens_FMNHINS0003145600,
    10 Solenopsis_invicta_FMNHINS0003144951;
-   tree tree_1 [p = 0.535, P = 0.535] = [&W 0.534644] (2,(4,((8,((10,9),7)),((6,5),3))),1);
-   tree tree_2 [p = 0.465, P = 1.000] = [&W 0.465023] ((4,2),((8,((10,9),7)),((6,5),3)),1);
-   tree tree_3 [p = 0.000, P = 1.000] = [&W 0.000333] (4,(2,((8,((10,9),7)),((6,5),3))),1);
+   tree tree_1 [p = 0.549, P = 0.549] = [&W 0.549300] (2,(4,((8,((10,9),7)),((6,5),3))),1);
+   tree tree_2 [p = 0.451, P = 1.000] = [&W 0.450700] ((4,2),((8,((10,9),7)),((6,5),3)),1);
 end;

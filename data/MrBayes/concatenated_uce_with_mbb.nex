@@ -1278,7 +1278,7 @@ begin mrbayes;
  prset tratiopr=beta(1.0,1.0); 
  prset statefreqpr = fixed(empirical); 
  lset nst=6 rates=gamma ngammacat=4; 
- outgroup Anochetus_mayri_FMNHINS0003165063; 
+ outgroup Ooceraea_australis_CASENT0106146; 
  mcmc;
  sumt;
 end;

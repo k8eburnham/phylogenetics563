@@ -7,14 +7,14 @@ Questions/problems/suggestions? Please visit: https://groups.google.com/forum/#!
 
 System: Apple M1, 8 cores, 8 GB RAM
 
-RAxML-NG was called at 19-Mar-2026 12:22:06 as follows:
+RAxML-NG was called at 02-May-2026 14:47:26 as follows:
 
 raxml-ng --check --msa concatenated_uce.fasta --model partitions.txt
 
 Analysis options:
   run mode: Alignment validation
   start tree(s): 
-  random seed: 1773940926
+  random seed: 1777751246
   SIMD kernels: SSE3
   parallelization: coarse-grained (auto), PTHREADS (auto)
 
@@ -48,7 +48,7 @@ Alignment can be successfully read by RAxML-NG.
 
 Execution log saved to: /Users/katieburnham/phylogenetics563/data/RAxML/concatenated_uce.fasta.raxml.log
 
-Analysis started: 19-Mar-2026 12:22:06 / finished: 19-Mar-2026 12:22:06
+Analysis started: 02-May-2026 14:47:26 / finished: 02-May-2026 14:47:26
 
-Elapsed time: 0.008 seconds
+Elapsed time: 0.010 seconds
 
